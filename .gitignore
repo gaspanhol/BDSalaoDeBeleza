@@ -1,0 +1,4 @@
+# Arquivos temporários do DB Browser e do sistema
+*.db-journal
+.DS_Store
+Thumbs.db
