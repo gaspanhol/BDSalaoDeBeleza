@@ -1,0 +1,94 @@
+CREATE TABLE `cliente` (
+  `id_cliente` integer PRIMARY KEY AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL COMMENT 'CHECK: mínimo de 3 caracteres (regra 3)',
+  `telefone` varchar(20) UNIQUE NOT NULL COMMENT 'Formato (DD) 9XXXX-XXXX. Regra 3',
+  `data_cadastro` date NOT NULL DEFAULT (CURRENT_DATE),
+  `email` varchar(120) UNIQUE COMMENT 'Opcional. Adicionado por ALTER TABLE. Ver justificativa no relatório'
+);
+
+CREATE TABLE `profissional` (
+  `id_profissional` integer PRIMARY KEY AUTO_INCREMENT,
+  `nome` varchar(60) UNIQUE NOT NULL COMMENT 'CHECK: mínimo de 2 caracteres',
+  `ativo` integer NOT NULL DEFAULT 1 COMMENT 'CHECK: 0 ou 1'
+);
+
+CREATE TABLE `telefone_profissional` (
+  `id_profissional` integer NOT NULL,
+  `telefone` varchar(20) NOT NULL COMMENT 'Formato (DD) 9XXXX-XXXX',
+  PRIMARY KEY (`id_profissional`, `telefone`)
+);
+
+CREATE TABLE `servico` (
+  `id_servico` integer PRIMARY KEY AUTO_INCREMENT,
+  `nome` varchar(60) UNIQUE NOT NULL,
+  `preco` decimal(10,2) NOT NULL COMMENT 'CHECK: maior que zero. Preço único por serviço (regra 14)',
+  `duracao_min` integer NOT NULL COMMENT 'Duração mínima em minutos. CHECK > 0',
+  `duracao_max` integer NOT NULL COMMENT 'Duração máxima em minutos. CHECK: maior ou igual a duracao_min'
+);
+
+CREATE TABLE `profissional_servico` (
+  `id_profissional` integer NOT NULL,
+  `id_servico` integer NOT NULL,
+  PRIMARY KEY (`id_profissional`, `id_servico`)
+);
+
+CREATE TABLE `expediente` (
+  `id_profissional` integer NOT NULL,
+  `dia_semana` integer NOT NULL COMMENT 'CHECK: 0 a 6. Igual a strftime(%w): 0 = domingo',
+  `hora_inicio` varchar(5) NOT NULL COMMENT 'Formato HH:MM',
+  `hora_fim` varchar(5) NOT NULL COMMENT 'Formato HH:MM. CHECK: maior que hora_inicio',
+  PRIMARY KEY (`id_profissional`, `dia_semana`, `hora_inicio`)
+);
+
+CREATE TABLE `indisponibilidade` (
+  `id_indisponibilidade` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_profissional` integer NOT NULL,
+  `data_hora_inicio` varchar(16) NOT NULL COMMENT 'Formato AAAA-MM-DD HH:MM',
+  `data_hora_fim` varchar(16) NOT NULL COMMENT 'Formato AAAA-MM-DD HH:MM. CHECK: maior que data_hora_inicio',
+  `motivo` varchar(200)
+);
+
+CREATE TABLE `agendamento` (
+  `id_agendamento` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_cliente` integer NOT NULL,
+  `id_profissional` integer NOT NULL,
+  `id_servico` integer NOT NULL,
+  `data_hora_inicio` varchar(16) NOT NULL COMMENT 'Formato AAAA-MM-DD HH:MM',
+  `duracao_efetiva` integer NOT NULL COMMENT 'Em minutos, entre duracao_min e duracao_max do serviço (regra 8)',
+  `preco_cobrado` decimal(10,2) NOT NULL COMMENT 'Preço congelado no momento da reserva (regra 17)',
+  `status` varchar(12) NOT NULL DEFAULT 'agendado' COMMENT 'CHECK: agendado, concluido, cancelado ou faltou'
+);
+
+ALTER TABLE `cliente` COMMENT = 'Cadastro de clientes. Regra 3: exige nome e telefone.';
+
+ALTER TABLE `profissional` COMMENT = 'Profissionais do salão.';
+
+ALTER TABLE `telefone_profissional` COMMENT = 'Atributo multivalorado de profissional (regra 18).';
+
+ALTER TABLE `servico` COMMENT = 'Serviços oferecidos. Regras 8 e 14.';
+
+ALTER TABLE `profissional_servico` COMMENT = 'Relacionamento N:N entre profissional e serviço (regra 13).';
+
+ALTER TABLE `expediente` COMMENT = 'Entidade fraca de profissional (regra 7). Identificada por profissional, dia e hora de início.';
+
+ALTER TABLE `indisponibilidade` COMMENT = 'Bloqueios de horário pelo profissional (regra 10).';
+
+ALTER TABLE `agendamento` COMMENT = 'Agendamentos. Horário de fim é derivado: data_hora_inicio + duracao_efetiva (não armazenado).';
+
+ALTER TABLE `telefone_profissional` ADD FOREIGN KEY (`id_profissional`) REFERENCES `profissional` (`id_profissional`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `profissional_servico` ADD FOREIGN KEY (`id_profissional`) REFERENCES `profissional` (`id_profissional`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `profissional_servico` ADD FOREIGN KEY (`id_servico`) REFERENCES `servico` (`id_servico`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `expediente` ADD FOREIGN KEY (`id_profissional`) REFERENCES `profissional` (`id_profissional`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `indisponibilidade` ADD FOREIGN KEY (`id_profissional`) REFERENCES `profissional` (`id_profissional`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `agendamento` ADD FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE `agendamento` ADD FOREIGN KEY (`id_profissional`) REFERENCES `profissional` (`id_profissional`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE `agendamento` ADD FOREIGN KEY (`id_servico`) REFERENCES `servico` (`id_servico`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE `agendamento` ADD FOREIGN KEY (`id_profissional`, `id_servico`) REFERENCES `profissional_servico` (`id_profissional`, `id_servico`) ON DELETE RESTRICT ON UPDATE CASCADE;
