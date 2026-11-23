@@ -38,7 +38,7 @@ CREATE TABLE profissional (
     ativo           INTEGER NOT NULL DEFAULT 1 CHECK (ativo IN (0, 1))
 );
 
--- ---------- TELEFONE_PROFISSIONAL (atributo multivalorado, regra 18) ----------
+-- ---------- TELEFONE_PROFISSIONAL (atributo multivalorado, regra 19) ----------
 CREATE TABLE telefone_profissional (
     id_profissional INTEGER NOT NULL,
     telefone        TEXT    NOT NULL
@@ -135,6 +135,7 @@ CREATE UNIQUE INDEX ux_agend_cli_inicio_ativo
     ON agendamento (id_cliente, data_hora_inicio) WHERE status <> 'cancelado';
 
 -- ---------- ALTER TABLE (documentado) ----------
+-- Regra 18: o cliente pode informar e-mail opcional para receber lembretes.
 -- Motivo: depois de criar o cadastro de clientes percebeu-se que o salão quer
 -- enviar lembretes de agendamento por e-mail. O campo é opcional (a regra 3 só
 -- exige nome e telefone), por isso entra por ALTER e não como NOT NULL.

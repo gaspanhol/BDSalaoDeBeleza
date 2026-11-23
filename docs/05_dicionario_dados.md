@@ -10,12 +10,12 @@ Legenda das restrições: PK = chave primária; FK = chave estrangeira; NN = NOT
 | cliente | nome | TEXT | NN, CK (tamanho mínimo de 3 caracteres) | Nome do cliente. Exigido no cadastro (regra 3). |
 | cliente | telefone | TEXT | NN, UQ, CK (formato (DD) 9XXXX-XXXX) | Telefone de contato. Exigido no cadastro (regra 3). |
 | cliente | data_cadastro | TEXT | NN, DF CURRENT_DATE | Data em que o cliente foi cadastrado. |
-| cliente | email | TEXT | UQ, CK (formato de e-mail ou NULL) | Opcional. Usado para lembretes de agendamento. Adicionado por ALTER TABLE. |
+| cliente | email | TEXT | UQ, CK (formato de e-mail ou NULL) | Opcional. Usado para lembretes de agendamento (regra 18). Adicionado por ALTER TABLE. |
 | profissional | id_profissional | INTEGER | PK, AUTOINCREMENT, NN | Identificador do profissional. |
 | profissional | nome | TEXT | NN, UQ, CK (tamanho mínimo de 2 caracteres) | Nome do profissional. |
 | profissional | ativo | INTEGER | NN, DF 1, CK (0 ou 1) | Indica se o profissional está ativo (1) ou inativo (0). |
 | telefone_profissional | id_profissional | INTEGER | PK (composta), FK → profissional.id_profissional (ON DELETE e ON UPDATE CASCADE), NN | Profissional dono do telefone. |
-| telefone_profissional | telefone | TEXT | PK (composta), NN, CK (formato (DD) 9XXXX-XXXX) | Telefone do profissional. Atributo multivalorado (regra 18). |
+| telefone_profissional | telefone | TEXT | PK (composta), NN, CK (formato (DD) 9XXXX-XXXX) | Telefone do profissional. Atributo multivalorado (regra 19). |
 | servico | id_servico | INTEGER | PK, AUTOINCREMENT, NN | Identificador do serviço. |
 | servico | nome | TEXT | NN, UQ | Nome do serviço (corte de cabelo, manicure, pedicure, massagem). |
 | servico | preco | REAL | NN, CK (maior que zero) | Preço único do serviço, em reais (regra 14). |

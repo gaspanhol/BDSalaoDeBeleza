@@ -14,7 +14,7 @@ Clientes, profissionais (com vários telefones), serviços (com preço e duraç�
 
 | Caminho | Conteúdo |
 |---|---|
-| `docs/01_contexto_regras.md` | Contexto do negócio e 18 regras de negócio |
+| `docs/01_contexto_regras.md` | Contexto do negócio e 19 regras de negócio |
 | `docs/02_mer/` | Diagrama MER (`mer.drawio`, `mer.png`) |
 | `docs/03_modelo_relacional/` | Modelo relacional |
 | `docs/04_normalizacao.md` | Normalização até a 3FN |

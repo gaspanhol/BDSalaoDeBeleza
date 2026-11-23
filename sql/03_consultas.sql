@@ -128,7 +128,7 @@ JOIN servico s               ON s.id_servico       = ps.id_servico
 GROUP BY p.id_profissional, p.nome
 ORDER BY p.nome;
 
--- Q12 (LEFT JOIN + GROUP_CONCAT)  [regra 18]
+-- Q12 (LEFT JOIN + GROUP_CONCAT)  [regra 19]
 -- Pergunta de negócio: Quais são os telefones de contato de cada profissional?
 SELECT p.nome AS profissional,
        GROUP_CONCAT(t.telefone, ' / ') AS telefones
