@@ -27,7 +27,7 @@ Cada profissional possui um ou mais telefones de contato.
 ### Profissionais, agenda e duração
 
 7. Um profissional define os intervalos de tempo em que atende em cada dia, por exemplo, das 9h às 12h.
-8. Cada serviço tem uma duração em minutos, variando dependendo do serviço e do profissional. Um agendamento ocupa esse tempo a partir do horário de início.
+8. Cada serviço tem uma duração mínima e uma máxima, em minutos. A duração efetiva do agendamento fica entre esses valores e é informada no momento da reserva. Manicure, pedicure e massagem têm duração fixa; o corte de cabelo varia de 60 a 180 minutos, conforme a complexidade.
 9. Um profissional não pode ter dois agendamentos ativos com sobreposição de tempo.
 10. Um profissional pode marcar um intervalo como indisponível até 1 hora antes do seu início, desde que não haja agendamento sobreposto a ele.
 11. Um profissional deve conseguir visualizar sua agenda, com cada intervalo marcado como livre, reservado ou indisponível.
@@ -36,8 +36,8 @@ Cada profissional possui um ou mais telefones de contato.
 
 ### Serviços e preços
 
-14. O preço de manicure e de pedicure é único e igual para todas as profissionais que realizam esses serviços.
-15. O preço de massagem e de corte de cabelo é definido individualmente por cada profissional que realiza o serviço, que pode alterá-lo.
+14. O preço de cada serviço é único no salão, independentemente de quem o realiza.
+15. O preço de um serviço pode ser alterado por qualquer profissional responsável por ele.
 16. Um cliente deve conseguir visualizar os serviços oferecidos por cada profissional e seus respectivos preços.
 17. No momento do agendamento, o preço do serviço é registrado no próprio agendamento, para que alterações futuras de preço não afetem atendimentos já realizados ou marcados.
 
