@@ -1,7 +1,7 @@
 # 2. MER
 
 ## Arquivos
-- `mer.brM3` (ou `.drawio`): arquivo-fonte do diagrama
+- `mer.drawio` (ou `.drawio`): arquivo-fonte do diagrama
 - `mer.png`: imagem exportada para o relatório
 
 ## Convenções usadas
