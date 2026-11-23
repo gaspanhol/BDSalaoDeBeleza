@@ -40,7 +40,8 @@ Cada profissional possui um ou mais telefones de contato.
 15. O preço de um serviço pode ser alterado por qualquer profissional responsável por ele.
 16. Um cliente deve conseguir visualizar os serviços oferecidos por cada profissional e seus respectivos preços.
 17. No momento do agendamento, o preço do serviço é registrado no próprio agendamento, para que alterações futuras de preço não afetem atendimentos já realizados ou marcados.
+18. Um cliente pode informar um e-mail opcional para receber lembretes de agendamento.
 
 ### Contatos
 
-18. Um profissional pode ter um ou mais telefones, e um cliente deve conseguir visualizar os telefones dos profissionais.
+19. Um profissional pode ter um ou mais telefones, e um cliente deve conseguir visualizar os telefones dos profissionais.
